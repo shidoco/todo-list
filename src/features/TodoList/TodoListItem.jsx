@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import TextInputWithLabel from '../../shared/TextInputWithLabel';
 import { isValidTodoTitle } from '../../utils/todoValidation';
 
@@ -14,15 +14,14 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
 
   const handleUpdate = (event) => {
     if (!isEditing) {
-      return;
-    }
-
-    event.preventDefault();
-    onUpdateTodo({
-      ...todo,
-      title: workingTitle,
-    });
-    setIsEditing(false);
+        return;
+      }
+      event.preventDefault();
+        onUpdateTodo(
+          {...todo,
+          title: workingTitle,}
+        );
+        setIsEditing(false);
   };
 
   const handleEdit = (event) => {
@@ -34,8 +33,9 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
-            <TextInputWithLabel value={workingTitle}
-              onChange={handleEdit}
+            <TextInputWithLabel
+            value={workingTitle}
+            onChange={handleEdit}
             />
             <button
               type="button"
