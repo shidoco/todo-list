@@ -7,8 +7,8 @@ function Logon({onSetEmail, onSetToken}) {
     const [authError, setAuthError] = useState('')
     const [isLoggingOn, setIsLoggingOn] = useState(false)
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+    async function handleSubmit(event) {
+        event.preventDefault();
         setIsLoggingOn(true);
         
         try {
@@ -47,7 +47,7 @@ function Logon({onSetEmail, onSetToken}) {
                     id="email"
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(event) => setEmail(event.target.value)}
                     required
                 />
             </div>
@@ -58,7 +58,7 @@ function Logon({onSetEmail, onSetToken}) {
                     id="password"
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                     required
                 />
             </div>
