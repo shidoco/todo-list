@@ -38,8 +38,11 @@ function Logon({onSetEmail, onSetToken}) {
     }
 
     return (
+        <>
+        
+        {authError && <div>{authError}</div>}
+
         <form onSubmit={handleSubmit}>
-            {authError && <div>{authError}</div>}
             
             <div>
                 <label htmlFor="email">Email:</label>
@@ -67,6 +70,7 @@ function Logon({onSetEmail, onSetToken}) {
                 {isLoggingOn ? 'Logging in...' : 'Log On'}
             </button>
         </form>
+        </>
     );
 }
 

@@ -47,7 +47,6 @@ function TodosPage({ token }) {
     }, [token]);
 
   async function addTodo(todoTitle) {
-    setIsTodoListLoading(true);
 
     const newTodo = {
       id: Date.now(),
@@ -86,7 +85,6 @@ function TodosPage({ token }) {
   }
 
   async function completeTodo(id) {
-    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === id);
 
@@ -129,7 +127,6 @@ function TodosPage({ token }) {
   }
 
   async function updateTodo(editedTodo) {
-    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
 
