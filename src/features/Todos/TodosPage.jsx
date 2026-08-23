@@ -28,7 +28,8 @@ function TodosPage({ token }) {
           setTodoList(data.tasks);
           setError('');
         } else if (response.status === 401) {
-          throw new Error('unauthorized');
+          setError('Please log in again.')
+          return;
         } else {
           throw new Error('Failed to fetch todos');
         }
@@ -46,6 +47,7 @@ function TodosPage({ token }) {
     }, [token]);
 
   async function addTodo(todoTitle) {
+    setIsTodoListLoading(true);
 
     const newTodo = {
       id: Date.now(),
@@ -78,10 +80,13 @@ function TodosPage({ token }) {
     } catch (error) {
       setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id));
       setError(error.message || 'Failed to add todo');
+    } finally {
+      setIsTodoListLoading(false);
     }
   }
 
   async function completeTodo(id) {
+    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === id);
 
@@ -101,15 +106,30 @@ function TodosPage({ token }) {
         credentials: 'include',
         body: JSON.stringify({ isCompleted: true }),
       });
+
+      if (response.status === 200) {
+        const serverTodo = await response.json();
+        setTodoList((previous) =>
+          previous.map((todo) => todo.id === id ? serverTodo : todo)
+        );
+        setError('');
+      } else if (response.status === 204) {
+        setError('');
+      } else {
+        throw new Error('Failed to complete todo');
+      }
     } catch (error) {
       setTodoList((previous) =>
         previous.map((todo) => todo.id === id ? originalTodo : todo)
       );
       setError(error.message || 'Failed to complete todo');
+    } finally {
+      setIsTodoListLoading(false);
     }
   }
 
   async function updateTodo(editedTodo) {
+    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
 
@@ -128,11 +148,25 @@ function TodosPage({ token }) {
         credentials: 'include',
         body: JSON.stringify({ title: editedTodo.title, isCompleted: editedTodo.isCompleted }),
       });
+
+      if (response.status === 200) {
+        const serverTodo = await response.json();
+        setTodoList((previous) =>
+          previous.map((todo) => todo.id === editedTodo.id ? serverTodo : todo)
+        );
+        setError('');
+      } else if (response.status === 204) {
+        setError('');
+      } else {
+        throw new Error('Failed to update todo');
+      }
     } catch (error) {
       setTodoList((previous) =>
         previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo)
       );
       setError(error.message || 'Failed to update todo');
+    } finally {
+      setIsTodoListLoading(false);
     }
   }
   
