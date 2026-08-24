@@ -28,8 +28,7 @@ function TodosPage({ token }) {
           setTodoList(data.tasks);
           setError('');
         } else if (response.status === 401) {
-          setError('Please log in again.')
-          return;
+          throw new Error('Unauthorized.')
         } else {
           throw new Error('Failed to fetch todos');
         }
