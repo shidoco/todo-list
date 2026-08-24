@@ -76,6 +76,7 @@ function TodosPage({ token }) {
         setError('');
       } else {
         throw new Error('Failed to add todo');
+        setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id));
       }
     } catch (error) {
       setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id));
@@ -118,6 +119,8 @@ function TodosPage({ token }) {
         setError('');
       } else {
         throw new Error('Failed to complete todo');
+        setTodoList((previous) =>
+        previous.map((todo) => todo.id === id ? originalTodo : todo))
       }
     } catch (error) {
       setTodoList((previous) =>
@@ -161,6 +164,9 @@ function TodosPage({ token }) {
         setError('');
       } else {
         throw new Error('Failed to update todo');
+        setTodoList((previous) =>
+        previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo)
+      );
       }
     } catch (error) {
       setTodoList((previous) =>

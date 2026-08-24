@@ -5,14 +5,15 @@ import Header from './shared/Header.jsx'
 import Logon from './features/Logon.jsx';
 
 function App() {
-  
+
   const [email, setEmail] = useState('');
 
   const [token, setToken] = useState('');
 
   return (
     <div>
-      <Header token={token} onSetToken={setToken} onSetEmail={setEmail} />
+      <Header //token={token} onSetToken={setToken} onSetEmail={setEmail} 
+      />
       {token ? (
         <TodosPage token={token} />
       ) : (
