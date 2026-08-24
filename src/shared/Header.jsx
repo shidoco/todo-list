@@ -1,5 +1,4 @@
-function Header({//token, onSetToken, onSetEmail
-  }) {
+function Header() {
   return (
     <h1>Todo List</h1>
   );

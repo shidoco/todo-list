@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div>
-      <Header token={token} onSetToken={setToken} onSetEmail={setEmail}/>
+      <Header/>
       {token ? (
         <TodosPage token={token} />
       ) : (

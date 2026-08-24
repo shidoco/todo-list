@@ -111,8 +111,6 @@ function TodosPage({ token }) {
           previous.map((todo) => todo.id === id ? serverTodo : todo)
         );
         setError('');
-      } else if (response.status === 204) {
-        setError('');
       } else if (response.status === 401) {
         setTodoList((previous) =>
         previous.map((todo) => todo.id === id ? originalTodo : todo))
@@ -129,8 +127,6 @@ function TodosPage({ token }) {
   }
 
   async function updateTodo(editedTodo) {
-
-    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
 
@@ -155,8 +151,6 @@ function TodosPage({ token }) {
         setTodoList((previous) =>
           previous.map((todo) => todo.id === editedTodo.id ? serverTodo : todo)
         );
-        setError('');
-      } else if (response.status === 204) {
         setError('');
       } else if (response.status === 401) {
         setTodoList((previous) =>
