@@ -112,7 +112,8 @@ function TodosPage({ token }) {
         );
         setError('');
       } else if (response.status === 401) {
-        setTodoList(todoList.map((todo) => todo.id === id ? originalTodo : todo));
+        setTodoList((previous) =>
+        previous.map((todo) => todo.id === id ? originalTodo : todo));
         throw new Error('Failed to complete todo');
       } else {
         throw new Error('Failed to complete todo');
