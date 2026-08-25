@@ -1,9 +1,9 @@
 function FilterInput({filterTerm, onFilterChange}) {
     return(
         <div>
-            <label htmlFor='filterinput'>Search todos:</label>
+            <label htmlFor='filterInput'>Search todos:</label>
             <input
-            id='filterinput'
+            id='filterInput'
             type='text'
             value={filterTerm}
             onChange={(event) => onFilterChange(event.target.value)}
