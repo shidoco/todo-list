@@ -18,7 +18,6 @@ function TodosPage({ token }) {
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   const invalidateCache = useCallback(() => {
-    console.log('Invalidating memo cache after todo mutation');
     setDataVersion((prev) => prev + 1);
   }, []);
   
@@ -198,7 +197,7 @@ function TodosPage({ token }) {
   
   return (
     <div>
-      
+
       {error && (
         <div>
           <div>{error}</div>
