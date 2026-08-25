@@ -112,16 +112,19 @@ function TodosPage({ token }) {
         );
         setError('');
       } else if (response.status === 401) {
-        setTodoList((previous) =>
-        previous.map((todo) => todo.id === id ? originalTodo : todo))
+        setTodoList(todoList.map((todo) =>
+          todo.id === id ? { ...todo, isCompleted: false } : todo));
+        previous.map((todo) => todo.id === id ? originalTodo : todo);
         throw new Error('Failed to complete todo');
       } else {
         throw new Error('Failed to complete todo');
       }
     } catch (error) {
+      setTodoList(todoList.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: false } : todo
+        ));
       setTodoList((previous) =>
-        previous.map((todo) => todo.id === id ? originalTodo : todo)
-      );
+        previous.map((todo) => todo.id === id ? originalTodo : todo));
       setError(error.message || 'Failed to complete todo');
     }
   }
