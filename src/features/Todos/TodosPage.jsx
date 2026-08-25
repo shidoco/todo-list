@@ -28,8 +28,7 @@ function TodosPage({ token }) {
           setTodoList(data.tasks);
           setError('');
         } else if (response.status === 401) {
-          setError('Please log in again.')
-          return;
+          throw new Error('Unauthorized.')
         } else {
           throw new Error('Failed to fetch todos');
         }
@@ -47,8 +46,6 @@ function TodosPage({ token }) {
     }, [token]);
 
   async function addTodo(todoTitle) {
-
-    setIsTodoListLoading(true);
 
     const newTodo = {
       id: Date.now(),
@@ -75,20 +72,19 @@ function TodosPage({ token }) {
           previous.map((todo) => todo.id === newTodo.id ? serverTodo : todo)
         );
         setError('');
+      } else if (response.status === 401) {
+        setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id));
+        throw new Error('Failed to add todo')
       } else {
         throw new Error('Failed to add todo');
       }
     } catch (error) {
       setTodoList((previous) => previous.filter((todo) => todo.id !== newTodo.id));
       setError(error.message || 'Failed to add todo');
-    } finally {
-      setIsTodoListLoading(false);
     }
   }
 
   async function completeTodo(id) {
-
-    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === id);
 
@@ -115,24 +111,21 @@ function TodosPage({ token }) {
           previous.map((todo) => todo.id === id ? serverTodo : todo)
         );
         setError('');
-      } else if (response.status === 204) {
-        setError('');
+      } else if (response.status === 401) {
+        setTodoList((previous) =>
+        previous.map((todo) => todo.id === id ? originalTodo : todo));
+        throw new Error('Failed to complete todo');
       } else {
         throw new Error('Failed to complete todo');
       }
     } catch (error) {
       setTodoList((previous) =>
-        previous.map((todo) => todo.id === id ? originalTodo : todo)
-      );
+        previous.map((todo) => todo.id === id ? originalTodo : todo));
       setError(error.message || 'Failed to complete todo');
-    } finally {
-      setIsTodoListLoading(false);
     }
   }
 
   async function updateTodo(editedTodo) {
-
-    setIsTodoListLoading(true);
 
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
 
@@ -158,8 +151,11 @@ function TodosPage({ token }) {
           previous.map((todo) => todo.id === editedTodo.id ? serverTodo : todo)
         );
         setError('');
-      } else if (response.status === 204) {
-        setError('');
+      } else if (response.status === 401) {
+        setTodoList((previous) =>
+        previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo)
+        );
+        throw new Error('Failed to update todo');
       } else {
         throw new Error('Failed to update todo');
       }
@@ -168,8 +164,6 @@ function TodosPage({ token }) {
         previous.map((todo) => todo.id === editedTodo.id ? originalTodo : todo)
       );
       setError(error.message || 'Failed to update todo');
-    } finally {
-      setIsTodoListLoading(false);
     }
   }
   
