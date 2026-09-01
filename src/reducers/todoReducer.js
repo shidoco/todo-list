@@ -19,7 +19,6 @@ export const TODO_ACTIONS = {
     SET_FILTER: 'SET_FILTER',
     CLEAR_ERROR: 'CLEAR_ERROR',
     RESET_FILTERS: 'RESET_FILTERS',
-
 };
 
 export const initialTodoState = {
@@ -30,7 +29,7 @@ export const initialTodoState = {
     sortBy: 'createdAt',
     sortDirection: 'asc',
     filterTerm: '',
-    dataVersion: 0
+    dataVersion: 0,
 };
 
 export function todoReducer(state, action) {
@@ -40,27 +39,28 @@ export function todoReducer(state, action) {
                 ...state,
                 isTodoListLoading: true,
                 error: '',
-                filterError: ''
+                filterError: '',
             };
         case TODO_ACTIONS.FETCH_SUCCESS:
             return {
                 ...state,
                 isTodoListLoading: false,
-                todoList: action.payload.tasks,
+                todoList: action.payload,
                 error: '',
-                filterError: ''
+                filterError: '',
             };
         case TODO_ACTIONS.FETCH_ERROR:
             return {
                 ...state,
-                error: `Error fetching todos: ${error.message}`,
-                filterError: `Error filtering/sorting todos: ${error.message}`
+                isTodoListLoading: false,
+                error: !action.payload.isFilterError ?action.payload.message : '',
+                filterError: action.payload.isFilterError ? action.payload.message : '',
             }
         case TODO_ACTIONS.ADD_TODO_START:
             return {
                 ...state,
                 error: '',
-                todoList: [...state.todoList, action.payload]
+                todoList: [...state.todoList, action.payload],
             };
 
         case TODO_ACTIONS.ADD_TODO_SUCCESS:
@@ -69,71 +69,71 @@ export function todoReducer(state, action) {
                 isTodoListLoading: false,
                 error: '',
                 todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
-                dataVersion: state.dataVersion + 1
+                dataVersion: state.dataVersion + 1,
             };
 
         case TODO_ACTIONS.ADD_TODO_ERROR:
             return {
                 ...state,
                 todoList: state.todoList.filter((todo) => todo.id !== action.payload),
-                error: 'Failed to add todo'
+                error: 'Failed to add todo.',
             };
         case TODO_ACTIONS.COMPLETE_TODO_START:
             return {
                 ...state,
                 error: '',
-                todoList: state.todoList.map((todo) => todo.id === action.payload ? {...todo, isCompleted: true} : todo)
+                todoList: state.todoList.map((todo) => todo.id === action.payload ? {...todo, isCompleted: true} : todo),
             };
         case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
             return {
                 ...state,
                 error: '',
                 todoList: state.todoList.map((todo) => todo.id === action.payload ? action.payload : todo),
-                dataVersion: state.dataVersion + 1
+                dataVersion: state.dataVersion + 1,
             };
         case TODO_ACTIONS.COMPLETE_TODO_ERROR:
             return {
                 ...state,
-                error: 'Failed to complete todo',
-                todoList: state.todoList.map((todo) => todo.id === action.payload ? originalTodo : todo)
+                error: 'Failed to complete todo.',
+                todoList: state.todoList.map((todo) => todo.id === action.payload ? originalTodo : todo),
             };
         case TODO_ACTIONS.UPDATE_TODO_START:
             return {
                 ...state,
                 todoList: state.todoList.map((todo) =>
-                todo.id === action.payload.id ? action.payload : todo)
+                todo.id === action.payload.id ? action.payload : todo),
             };
         case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
             return {
                 ...state,
                 error: '',
                 todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
-                dataVersion : state.dataVersion + 1
+                dataVersion : state.dataVersion + 1,
             };
         case TODO_ACTIONS.UPDATE_TODO_ERROR:
             return {
                 ...state,
                 error: 'Failed to update todo.',
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? originalTodo : todo)
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? originalTodo : todo),
             };
         case TODO_ACTIONS.SET_SORT:
             return {
                 ...state,
                 sortBy: action.payload.sortBy,
                 sortDirection: action.payload.sortDirection,
-                dataVersion: state.dataVersion + 1
+                dataVersion: state.dataVersion + 1,
             };
         case TODO_ACTIONS.SET_FILTER:
             return {
                 ...state,
                 filterTerm: action.payload,
-                filterError: ''
+                filterError: '',
             };
         case TODO_ACTIONS.CLEAR_ERROR:
             return {
                 ...state,
                 error: '',
-                filterError: ''
+                filterError: '',
             };
         case TODO_ACTIONS.RESET_FILTERS:
             return {
@@ -141,7 +141,7 @@ export function todoReducer(state, action) {
                 filterTerm: '',
                 filterError: '',
                 sortBy: 'createdAt',
-                sortDirection: 'desc'
+                sortDirection: 'desc',
             }
         default:
             throw new Error (`Unknown action type: ${action.type}`);
