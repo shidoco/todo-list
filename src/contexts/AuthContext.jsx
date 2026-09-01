@@ -4,6 +4,7 @@ const AuthContext = createContext();
 
 export function useAuth() {
   const context = useContext(AuthContext);
+  console.log('Auth context: ', context);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
@@ -16,35 +17,35 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState('');
   
   const login = async (userEmail, password) => {
-  try {
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail, password }),
-      credentials: 'include',
-    };
+    try {
+        const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail, password }),
+        credentials: 'include',
+        };
     
-    const res = await fetch('/api/users/logon', options);
-    const data = await res.json();
+        const res = await fetch('/api/users/logon', options);
+        const data = await res.json();
     
-    if (res.status === 200 && data.name && data.csrfToken) {
-      // Success: Update state
-      setEmail(data.name);
-      setToken(data.csrfToken);
-      return { success: true };
-    } else {
-      // Failure: Return error
-      return {
-        success: false,
-        error: `Authentication failed: ${data?.message}`,
-      };
+        if (res.status === 200 && data.name && data.csrfToken) {
+        // Success: Update state
+            setEmail(data.name);
+            setToken(data.csrfToken);
+            return { success: true };
+        } else {
+        // Failure: Return error
+            return {
+                success: false,
+                error: `Authentication failed: ${data?.message}`,
+        };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            error: 'Network error during login.',
+        };
     }
-  } catch (error) {
-    return {
-      success: false,
-      error: 'Network error during login.',
-    };
-  }
     };
 
     const logoff = async () => {
@@ -54,7 +55,7 @@ export function AuthProvider({ children }) {
             setToken('');
             return { success: true, message: 'No active session token found.'};
         }
-        
+
         try {
             const options = {
             method: 'POST',
@@ -88,8 +89,6 @@ export function AuthProvider({ children }) {
             setEmail('');
             setToken('');
         }
-
-        return result;
     };
   
   const value = {
@@ -97,7 +96,7 @@ export function AuthProvider({ children }) {
     token,
     isAuthenticated: !!token,
     login,
-    logout,
+    logoff,
   };
   
   return (

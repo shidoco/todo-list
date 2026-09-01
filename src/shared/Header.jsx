@@ -1,18 +1,15 @@
-import Logon from '/Users/swarren/Desktop/CTD-repos/sydni-warren-reactctd/Todo-List/todo-list/src/features/Logon.jsx';
-import Logoff from '/Users/swarren/Desktop/CTD-repos/sydni-warren-reactctd/Todo-List/todo-list/src/features/Logoff.jsx';
+import Logon from '../features/Logon.jsx';
+import Logoff from '../features/Logoff.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Header({token, onSetToken, onSetEmail}) {
+function Header() {
+  const { isAuthenticated } = useAuth();
   return (
     <header>
     <h1>Todo List</h1>
 
     <div>
-      { token && 
-        (<Logoff
-        token={token}
-        onSetToken={onSetToken}
-        onSetEmail={onSetEmail}/>)
-      }
+      {isAuthenticated && <Logoff />}
     </div>
   </header>
   );

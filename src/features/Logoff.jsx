@@ -1,27 +1,20 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 function Logoff({ token, onSetEmail, onSetToken }) {
+    const { logoff } = useAuth();
+
     const [authError, setAuthError] = useState('');
     const [isLoggingOff, setIsLoggingOff] = useState(false);
 
     async function handleLogoff() {
         setIsLoggingOff(true);
+        setAuthError('');
 
         try {
-            const response = await fetch(`/api/users/logoff`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': token,
-                },
-                credentials: 'include',
-            });
+            const result = await logoff();
 
-            if (response.status === 200 || response.ok) {
-                onSetEmail('');
-                onSetToken('');
-                setAuthError('');
-            } else {
+            if (!result.success) {
                 setAuthError('Logoff failed.');
             }
         } catch (error) {
