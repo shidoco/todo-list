@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Logon({onSetEmail, onSetToken}) {
+function Logon() {
 
     const { login } = useAuth();
 
@@ -21,7 +21,7 @@ function Logon({onSetEmail, onSetToken}) {
             if (result.success) {
                 setAuthError('');
             } else {
-                setAuthError('Authentication failed.');
+                setAuthError(result.error ||'Authentication failed.');
             }
         } catch (error) {
             setAuthError(`Error: ${error.name} | ${error.message}`);

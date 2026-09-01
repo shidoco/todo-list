@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Logoff({ token, onSetEmail, onSetToken }) {
+function Logoff() {
     const { logoff } = useAuth();
 
     const [authError, setAuthError] = useState('');
