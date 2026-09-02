@@ -66,7 +66,8 @@ function TodosPage() {
         throw new Error('Failed to fetch todos.');
       }
     } catch (error) {
-        dispatch({ type: TODO_ACTIONS.FETCH_ERROR
+        dispatch({ type: TODO_ACTIONS.FETCH_ERROR,
+          payload: { message: 'Error fetching todos: Unauthorized.'}
         });
       }
     }, [token, sortBy, sortDirection, debouncedFilterTerm]);
@@ -74,7 +75,7 @@ function TodosPage() {
   //Invalidate Cache Function.
   const invalidateCache = useCallback(() => {
     fetchTodos();
-  }, [fetchTodos]);
+  }, [fetchTodos, sortBy, sortDirection]);
 
   //After Login, load todos.
   useEffect(() => {
