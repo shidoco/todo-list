@@ -52,7 +52,8 @@ export function AuthProvider({ children }) {
         if (!token) {
             setEmail('');
             setToken('');
-            return { success: true, message: 'No active session token found.'};
+            return { success: true, 
+                error: 'No active session token found.'};
         }
 
         try {
@@ -71,7 +72,10 @@ export function AuthProvider({ children }) {
             // Success: Update state
             setEmail('');
             setToken('');
-            return { success: true };
+            return { 
+                success: true, 
+                error: ''
+            };
             } else {
             // Failure: Return error
             return {
