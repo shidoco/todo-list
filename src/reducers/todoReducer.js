@@ -54,7 +54,7 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.FETCH_ERROR:
             return {
                 ...state,
-                error: 'There was an error fetching todos.',
+                error: action.payload?.message || 'There was an error fetching todos.',
                 isTodoListLoading: false,
             }
         case TODO_ACTIONS.ADD_TODO_START:
@@ -67,9 +67,8 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.ADD_TODO_SUCCESS:
             return {
                 ...state,
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.serverTodo : todo),
                 error: '',
-                isTodoListLoading: false,
                 dataVersion: state.dataVersion + 1,
             };
 
@@ -88,14 +87,14 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
             return {
                 ...state,
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.serverTodo : todo),
                 error: '',
                 dataVersion: state.dataVersion + 1,
             };
         case TODO_ACTIONS.COMPLETE_TODO_ERROR:
             return {
                 ...state,
-                todoList: state.todoList.map((todo) => todo.id === action.payload ? {...todo, isCompleted: false} : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
                 error: 'Failed to complete todo.',
             };
         case TODO_ACTIONS.UPDATE_TODO_START:
@@ -114,7 +113,7 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.UPDATE_TODO_ERROR:
             return {
                 ...state,
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.originalTodo : todo),
                 error: 'Failed to update todo.',
             };
         case TODO_ACTIONS.SET_SORT:

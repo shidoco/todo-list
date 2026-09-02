@@ -60,7 +60,7 @@ function TodosPage() {
         });
       //Fetch Failiure.
       } else if (response.status === 401) {
-        dispatch({ type: TODO_ACTIONS.FETCH_ERROR
+        dispatch({ type: TODO_ACTIONS.FETCH_ERROR, payload: { message: 'Error fetching todos: Unauthorized.'}
         });
       } else {
         throw new Error('Failed to fetch todos.');
@@ -86,13 +86,14 @@ function TodosPage() {
   //Add todo function.
   async function addTodo(todoTitle) {
 
+    //New Client Todo Created With Input Title.
     const newTodo = {
       id: Date.now(),
       title: todoTitle,
       isCompleted: false,
     };
 
-    //Optimistically Add Todo.
+    //Optimistically Add Client Todo to Local State.
     dispatch({ type: TODO_ACTIONS.ADD_TODO_START, payload: newTodo });
 
     try {
@@ -107,8 +108,10 @@ function TodosPage() {
       });
       // Add Success.
       if (response.status === 200 || response.status === 201) {
+        //Retrieve Todo from Server.
         const newServerTodo = await response.json();
-        dispatch({ type: TODO_ACTIONS.ADD_TODO_SUCCESS, payload: newServerTodo });
+        //Replace Client Todo with Server Todo.
+        dispatch({ type: TODO_ACTIONS.ADD_TODO_SUCCESS, payload: { id: newTodo.id, serverTodo: newServerTodo }});
         invalidateCache();
       //Add Failiure. Go Back To Previous TodoList State.
       } else if (response.status === 401) {
@@ -124,7 +127,8 @@ function TodosPage() {
   async function completeTodo(id) {
 
     //Find Client Todo.
-    
+    const originalTodo = todoList.find((todo) => todo.id === id);
+
     //Optimistically Complete Client Todo.
     dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_START, payload: id});
 
@@ -144,16 +148,16 @@ function TodosPage() {
         //Server Todo as a Response.
         const completeServerTodo = await response.json();
         //Update Client State with Server Response.
-        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS, payload: { id: completeServerTodo.id, completeServerTodo }});
+        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS, payload: { id: completeServerTodo.id, serverTodo: completeServerTodo }});
         invalidateCache();
-        //Complete Server Todo Failiure. Reverse Client Todo Completion.
+        //Complete Server Todo Failiure. Restore Orginial Incomplete Todo to TodoList. 
       } else if (response.status === 401) {
-        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id }});
+        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
       } else {
         throw new Error('Failed to complete todo.');
       }
     } catch (error) {
-      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id }});
+      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
     }
   }
 
