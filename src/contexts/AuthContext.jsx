@@ -24,10 +24,10 @@ export function AuthProvider({ children }) {
         credentials: 'include',
         };
     
-        const res = await fetch('/api/users/logon', options);
-        const data = await res.json();
+        const response = await fetch('/api/users/logon', options);
+        const data = await response.json();
     
-        if (res.status === 200 && data.name && data.csrfToken) {
+        if (response.status === 200 && data.name && data.csrfToken) {
         // Success: Update state
             setEmail(data.name);
             setToken(data.csrfToken);
@@ -64,10 +64,10 @@ export function AuthProvider({ children }) {
             credentials: 'include',
             };
     
-            const res = await fetch('/api/users/logoff', options);
-            const data = await res.json();
+            const response = await fetch('/api/users/logoff', options);
+            const data = await response.json();
     
-            if (res.status === 200 || res.ok) {
+            if (response.status === 200 || response.ok) {
             // Success: Update state
             setEmail('');
             setToken('');
