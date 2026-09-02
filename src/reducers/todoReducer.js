@@ -29,7 +29,7 @@ export const initialTodoState = {
     filterError: '',
     isTodoListLoading: true,
     sortBy: 'createdAt',
-    sortDirection: 'desc',
+    sortDirection: 'asc',
     filterTerm: '',
     dataVersion: 0,
 };
@@ -69,6 +69,8 @@ export function todoReducer(state, action) {
                 ...state,
                 todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.serverTodo : todo),
                 error: '',
+                filterError: '',
+                isTodoListLoading: false,
                 dataVersion: state.dataVersion + 1,
             };
 
@@ -89,6 +91,8 @@ export function todoReducer(state, action) {
                 ...state,
                 todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.serverTodo : todo),
                 error: '',
+                filterError: '',
+                isTodoListLoading: false,
                 dataVersion: state.dataVersion + 1,
             };
         case TODO_ACTIONS.COMPLETE_TODO_ERROR:
@@ -108,6 +112,8 @@ export function todoReducer(state, action) {
                 ...state,
                 todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
                 error: '',
+                filterError: '',
+                isTodoListLoading: false,
                 dataVersion : state.dataVersion + 1,
             };
         case TODO_ACTIONS.UPDATE_TODO_ERROR:
@@ -142,8 +148,9 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.RESET_FILTERS:
             return {
                 ...state,
+                filterError: '',
                 sortBy: 'createdAt',
-                sortDirection: 'desc',
+                sortDirection: 'asc',
                 filterTerm: '',
             }
         default:

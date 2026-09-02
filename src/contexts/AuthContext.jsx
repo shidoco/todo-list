@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
         return {
             success: false,
-            error: 'Network error during login.',
+            error: 'Network error during login',
         };
     }
     };
@@ -76,13 +76,13 @@ export function AuthProvider({ children }) {
             // Failure: Return error
             return {
                 success: false,
-                error: 'Authentication failed.',
+                error: `Authentication failed: ${data?.message}`,
             };
             }
         } catch (error) {
             return {
             success: false,
-            error: 'Network error during logoff.',
+            error: 'Network error during logoff',
             };
         } finally {
             setEmail('');

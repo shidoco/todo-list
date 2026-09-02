@@ -14,7 +14,7 @@ function Logout() {
         try {
             const result = await logout();
 
-            if (!result.success) {
+            if (result && !result.success) {
                 setAuthError('Logoff failed.');
             }
         } catch (error) {
