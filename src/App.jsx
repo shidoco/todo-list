@@ -12,11 +12,11 @@ function App() {
   return (
     <div>
       <Header />
-      {isAuthenticated ? (
+      {isAuthenticated ?
         <TodosPage />
-      ) : (
+        :
         <Logon />
-      )}
+      }
     </div>
   );
 }

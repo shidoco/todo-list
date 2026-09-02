@@ -27,7 +27,7 @@ export const initialTodoState = {
     filterError: '',
     isTodoListLoading: true,
     sortBy: 'createdAt',
-    sortDirection: 'asc',
+    sortDirection: 'desc',
     filterTerm: '',
     dataVersion: 0,
 };
@@ -95,7 +95,7 @@ export function todoReducer(state, action) {
             return {
                 ...state,
                 error: 'Failed to complete todo.',
-                todoList: state.todoList.map((todo) => todo.id === action.payload ? originalTodo : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload ? action.payload.originalTodo : todo),
             };
         case TODO_ACTIONS.UPDATE_TODO_START:
             return {
@@ -114,7 +114,7 @@ export function todoReducer(state, action) {
             return {
                 ...state,
                 error: 'Failed to update todo.',
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? originalTodo : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.originalTodo : todo),
             };
         case TODO_ACTIONS.SET_SORT:
             return {
@@ -133,7 +133,6 @@ export function todoReducer(state, action) {
             return {
                 ...state,
                 error: '',
-                filterError: '',
             };
         case TODO_ACTIONS.RESET_FILTERS:
             return {

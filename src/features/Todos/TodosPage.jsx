@@ -122,10 +122,6 @@ function TodosPage() {
   async function completeTodo(id) {
 
     const originalTodo = todoList.find((todo) => todo.id === id);
-
-    const completedTodos = todoList.map((todo) =>
-      todo.id === id ? { ...todo, isCompleted: true } : todo
-    );
     
     dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_START, payload: id});
 
@@ -157,10 +153,6 @@ function TodosPage() {
   async function updateTodo(editedTodo) {
 
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
-
-    const updatedTodos = todoList.map((todo) =>
-      todo.id === editedTodo.id ? editedTodo : todo
-    );
     
     dispatch({ type: TODO_ACTIONS.UPDATE_TODO_START, payload: editedTodo });
 

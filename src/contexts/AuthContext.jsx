@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
     }
     };
 
-    const logoff = async () => {
+    const logout = async () => {
 
         if (!token) {
             setEmail('');
@@ -95,7 +95,7 @@ export function AuthProvider({ children }) {
     token,
     isAuthenticated: !!token,
     login,
-    logoff,
+    logout,
   };
   
   return (

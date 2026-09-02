@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Logoff() {
-    const { logoff } = useAuth();
+function Logout() {
+    const { logout } = useAuth();
 
     const [authError, setAuthError] = useState('');
     const [isLoggingOff, setIsLoggingOff] = useState(false);
@@ -12,7 +12,7 @@ function Logoff() {
         setAuthError('');
 
         try {
-            const result = await logoff();
+            const result = await logout();
 
             if (!result.success) {
                 setAuthError('Logoff failed.');
@@ -40,4 +40,4 @@ function Logoff() {
     );
 }
 
-export default Logoff;
+export default Logout;
