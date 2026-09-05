@@ -153,12 +153,12 @@ function TodosPage() {
         invalidateCache();
         //Complete Server Todo Failiure. Restore Orginial Incomplete Todo to TodoList. 
       } else if (response.status === 401) {
-        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
+        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, og: originalTodo }});
       } else {
         throw new Error('Failed to complete todo.');
       }
     } catch (error) {
-      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
+      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, og: originalTodo }});
     }
   }
 
@@ -187,7 +187,7 @@ function TodosPage() {
         //Update Client TodoList with Server Todo. Replace Client Todo.
         dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS, payload: { id: serverTodo.id, serverTodo }});
         invalidateCache();
-      //Failiure Updating Server Todo. Restore Client Todo Back to How it Was. 
+      //Failiure Updating Server Todo. Restore Client Todo Back to Original Todo. 
       } else if (response.status === 401) {
         dispatch({ type: TODO_ACTIONS.UPDATE_TODO_ERROR, payload: { id: editedTodo.id, originalTodo }});
       } else {

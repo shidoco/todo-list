@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
             setEmail('');
             setToken('');
             return { success: true, 
-                error: 'No active session token found.'};
+                message: 'No active session token found.'};
         }
 
         try {
@@ -65,7 +65,7 @@ export function AuthProvider({ children }) {
             credentials: 'include',
             };
     
-            const response = await fetch('/api/users/logout', options);
+            const response = await fetch('/api/users/logoff', options);
             const data = await response.json();
     
             if (response.status === 200 || response.ok) {
