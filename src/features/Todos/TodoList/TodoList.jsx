@@ -4,7 +4,6 @@ import TodoListItem from './TodoListItem.jsx';
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion, statusFilter = 'active', }) {
   
   const filteredTodoList = useMemo(() => {
-    console.log(`Recalculating filtered todos (v${dataVersion}) - Status: ${statusFilter}`);
       let filteredTodos;
       switch (statusFilter) {
         case 'completed':

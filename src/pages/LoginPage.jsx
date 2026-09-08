@@ -30,13 +30,13 @@ function LoginPage() {
             const result = await login(email, password);
             
             if (result.success) {
-                setAuthError('');
+                navigate(from, { replace: true});
             } else {
                 setAuthError(result.error ||'Authentication failed.');
+                setIsLoggingOn(false);
             }
         } catch (error) {
-            setAuthError(`Error: ${error.name} | ${error.message}`);
-        } finally {
+            setAuthError(`Error logging in: ${error.name} | ${error.message}`);
             setIsLoggingOn(false);
         }
     }
