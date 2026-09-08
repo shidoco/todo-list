@@ -1,18 +1,22 @@
 import { useState, useEffect, useCallback, useReducer } from 'react';
-import TodoList from './TodoList/TodoList.jsx';
-import TodoForm from './TodoForm.jsx';
-import SortBy from '../../shared/SortBy.jsx';
-import FilterInput from '../../shared/FilterInput.jsx';
-import useDebounce from '../../utils/useDebounce.js';
-import { todoReducer, initialTodoState, TODO_ACTIONS } from '../../reducers/todoReducer.js';
-import { useAuth } from '../../contexts/AuthContext.jsx'
+import TodoList from '../features/Todos/TodoList/TodoList.jsx';
+import TodoForm from '../features/Todos/TodoForm.jsx';
+import SortBy from '../shared/SortBy.jsx';
+import FilterInput from '../shared/FilterInput.jsx';
+import useDebounce from '../utils/useDebounce.js';
+import { todoReducer, initialTodoState, TODO_ACTIONS } from '../reducers/todoReducer.js';
+import { useAuth } from '../contexts/AuthContext.jsx'
+import { useSearchParams } from 'react-router';
+import StatusFilter from '../shared/StatusFilter.jsx';
 
 function TodosPage() {
   //Use Token.
   const { token } = useAuth();
-
+  const [searchParams] = useSearchParams();
   //Use Reducer State and Dispatch Updates.
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
+
+  const statusFilter = searchParams.get('status') || 'all';
   
   const {
     todoList,
@@ -224,9 +228,10 @@ function TodosPage() {
       )}
 
       <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={(newSort) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy : newSort, sortDirection }})} onSortDirectionChange={(newDir) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy, sortDirection: newDir }})}/>
+      <StatusFilter />
       <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} />
       <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} dataVersion={dataVersion} />
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} dataVersion={dataVersion} statusFilter={statusFilter}/>
 
     </div>
   );
