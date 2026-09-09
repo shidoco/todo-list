@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 function ProfilePage() {
-    const { user, token, isAuthenticated } = useAuth();
+    const { token, isAuthenticated } = useAuth();
     const [stats, setStats] = useState({ total: 0, completedNum: 0, active: 0});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -41,10 +41,7 @@ function ProfilePage() {
                 if (tasksList.length > 0 && tasksList[0].User) {
                     setName(tasksList[0].User.name || '');
                     setEmail(tasksList[0].User.email || '');
-                } else if (user) {
-                    setName(user.name || '');
-                    setEmail(user.email || '');
-                }
+                } 
                 
 
                 const total = tasksList.length;
@@ -75,10 +72,10 @@ function ProfilePage() {
             <section className="profile-info">
                 <h2>Account Details</h2>
                 <p>
-                    Name: {name || user?.name || 'N/A'}
+                    Name: {name || 'N/A'}
                 </p>
                 <p>
-                    Email: {email || user?.email || 'N/A'}
+                    Email: {email || 'N/A'}
                 </p>
             </section>
 
