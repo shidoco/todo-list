@@ -29,7 +29,9 @@ function LoginPage() {
         try {
             const result = await login(email, password);
             
-            if (!result.success) {
+            if (result.success) {
+                navigate(from, {replace: true});
+            } else {
                 setAuthError(result.error ||'Authentication failed.');
             }
         } catch (error) {

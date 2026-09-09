@@ -96,7 +96,7 @@ function ProfilePage() {
                         <h3>Active</h3>
                         <p>{stats.active}</p>
                         <h3>Percentage Complete</h3>
-                        <p>{stats.percentage}%</p>
+                        <p>{stats.percentage}</p>
                     </div>
                 )}
             </section>
