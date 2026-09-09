@@ -3,11 +3,9 @@ import { useAuth } from '../contexts/AuthContext';
 
 function ProfilePage() {
     const { user, token } = useAuth();
-    const [stats, setStats] = useState({ total: 0, completedNum: 0, active: 0});
+    const [stats, setStats] = useState({ total: 0, completedNum: 0, active: 0, percentage: 'N/A'});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
 
     useEffect(() => {
         async function fetchTodoStats() {
@@ -37,23 +35,18 @@ function ProfilePage() {
                 const todos = await response.json();
                 
                 const tasksList = todos.tasks;
-
-                setName(user.name || '');
-                setEmail(user.email || '');
                 
-                
-
                 const total = tasksList.length;
-                    
+
                 const completed = tasksList.filter((todo) => todo.isCompleted);
-                    
+
                 const completedNum = completed.length;
-                    
+
                 const active = total - completedNum;
 
-                const percentage = (total / completedNum) * 100;
+                const percentage = total === 0 ? 'N/A' : ((completedNum / total) * 100);
 
-                setStats({total, completedNum, active, percentage });
+                setStats({ total, completedNum, active, percentage });
             
 
             } catch (error) {
@@ -79,10 +72,10 @@ function ProfilePage() {
                 {!loading && !error && (
                 <div>
                     <p>
-                    Name: {name || 'N/A'}
+                    Name: {user.name || 'N/A'}
                     </p>
                     <p>
-                    Email: {email || 'N/A'}
+                    Email: {user.email || 'N/A'}
                     </p>
                 </div>
                 )}
