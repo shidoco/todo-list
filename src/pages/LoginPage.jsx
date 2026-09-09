@@ -12,7 +12,7 @@ function LoginPage() {
     const [isLoggingOn, setIsLoggingOn] = useState(false);
     const [authError, setAuthError] = useState('');
 
-    const from = location.state?.from || '/todos';
+    const from = location.state?.from.pathname || '/todos';
 
     useEffect(() => {
         if (isAuthenticated) {

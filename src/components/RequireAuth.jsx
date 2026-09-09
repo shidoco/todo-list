@@ -20,7 +20,9 @@ function RequireAuth({ children }) {
         return <div>Redirecting to login...</div>;
     }
 
-    return children;
+    if (isAuthenticated) {
+        return children;
+    }
 }
 
 export default RequireAuth;
