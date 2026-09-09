@@ -12,7 +12,7 @@ function LoginPage() {
     const [isLoggingOn, setIsLoggingOn] = useState(false);
     const [authError, setAuthError] = useState('');
 
-    const from = location.state?.from?.pathname || '/todos';
+    const from = location.state?.from || '/todos';
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -29,14 +29,12 @@ function LoginPage() {
         try {
             const result = await login(email, password);
             
-            if (result.success) {
-                navigate(from, { replace: true});
-            } else {
+            if (!result.success) {
                 setAuthError(result.error ||'Authentication failed.');
-                setIsLoggingOn(false);
             }
         } catch (error) {
             setAuthError(`Error logging in: ${error.name} | ${error.message}`);
+        } finally {
             setIsLoggingOn(false);
         }
     }

@@ -14,10 +14,16 @@ function Logoff() {
         setError('');
 
         try {
-            await logout();
-            navigate('/login');
+            const result = await logout();
+            if (result.success) {
+                navigate('/login');
+            } else {
+                throw new Error(`Failed to Logout: ${result.error}`)
+            }
         } catch (error) {
             setError(`Error: ${error.message}`);
+        } finally {
+            setIsLoggingOff(false);
         }
     }
 
