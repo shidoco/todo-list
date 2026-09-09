@@ -38,10 +38,9 @@ function ProfilePage() {
                 
                 const tasksList = todos.tasks;
 
-                if (tasksList.length > 0 && tasksList[0].User) {
-                    setName(user.name || '');
-                    setEmail(user.email || '');
-                } 
+                setName(user.name || '');
+                setEmail(user.email || '');
+                
                 
 
                 const total = tasksList.length;
@@ -52,7 +51,9 @@ function ProfilePage() {
                     
                 const active = total - completedNum;
 
-                setStats({total, completedNum, active });
+                const percentage = (total / completedNum) * 100;
+
+                setStats({total, completedNum, active, percentage });
             
 
             } catch (error) {
@@ -71,12 +72,20 @@ function ProfilePage() {
 
             <section className="profile-info">
                 <h2>Account Details</h2>
-                <p>
+
+                {loading && <p>Loading profile...</p>}
+                {error && <p>{error}</p>}
+
+                {!loading && !error && (
+                <div>
+                    <p>
                     Name: {name || 'N/A'}
-                </p>
-                <p>
+                    </p>
+                    <p>
                     Email: {email || 'N/A'}
-                </p>
+                    </p>
+                </div>
+                )}
             </section>
 
             <section className="profile-stats">
@@ -93,6 +102,8 @@ function ProfilePage() {
                         <p>{stats.completedNum}</p>
                         <h3>Active</h3>
                         <p>{stats.active}</p>
+                        <h3>Percentage Complete</h3>
+                        <p>{stats.percentage}%</p>
                     </div>
                 )}
             </section>
