@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 function ProfilePage() {
-    const { token, isAuthenticated } = useAuth();
+    const { user, token } = useAuth();
     const [stats, setStats] = useState({ total: 0, completedNum: 0, active: 0});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -39,8 +39,8 @@ function ProfilePage() {
                 const tasksList = todos.tasks;
 
                 if (tasksList.length > 0 && tasksList[0].User) {
-                    setName(tasksList[0].User.name || '');
-                    setEmail(tasksList[0].User.email || '');
+                    setName(user.name || '');
+                    setEmail(user.email || '');
                 } 
                 
 

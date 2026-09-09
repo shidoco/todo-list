@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
 
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
+  const [user, setUser] = useState('');
   
   const login = async (userEmail, password) => {
     try {
@@ -29,7 +30,8 @@ export function AuthProvider({ children }) {
     
         if (response.status === 200 && data.name && data.csrfToken) {
         // Success: Update state
-            setEmail(data.name);
+            setUser(data);
+            setEmail(data.email);
             setToken(data.csrfToken);
             return { success: true };
         } else {
@@ -50,6 +52,7 @@ export function AuthProvider({ children }) {
     const logout = async () => {
 
         if (!token) {
+            setUser('');
             setEmail('');
             setToken('');
             return { success: true, 
@@ -70,6 +73,7 @@ export function AuthProvider({ children }) {
     
             if (response.status === 200 || response.ok) {
             // Success: Update state
+            setUser('');
             setEmail('');
             setToken('');
             return { 
@@ -89,12 +93,14 @@ export function AuthProvider({ children }) {
             error: 'Network error during logoff',
             };
         } finally {
+            setUser('');
             setEmail('');
             setToken('');
         }
     };
   
   const value = {
+    user,
     email,
     token,
     isAuthenticated: !!token,

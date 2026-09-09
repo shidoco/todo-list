@@ -10,7 +10,11 @@ function NotFoundPage() {
                 <h2> Here are some helpful links:</h2>
                 <ul>
                     <li>
-                        <Link to="/todos">Go to My Todos</Link>
+                        <Link to="/login">Go to Login Page</Link>
+                    </li>
+
+                    <li>
+                        <Link to="/todos">View Todos</Link>
                     </li>
 
                     <li>
