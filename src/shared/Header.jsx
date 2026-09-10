@@ -1,21 +1,16 @@
 import Logoff from '../features/Logoff.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Header({token, onSetToken, onSetEmail}) {
+function Header() {
+  const { isAuthenticated } = useAuth();
   return (
-    <>
     <header>
     <h1>Todo List</h1>
+
     <div>
-      {token && (
-        <Logoff
-          token={token}
-          onSetToken={onSetToken}
-          onSetEmail={onSetEmail}
-        />
-      )}
+      {isAuthenticated && <Logoff />}
     </div>
-    </header>
-    </>
+  </header>
   );
 }
 

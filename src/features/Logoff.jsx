@@ -1,30 +1,24 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
-function Logoff({ token, onSetEmail, onSetToken }) {
-    const [error, setError] = useState('');
+function Logout() {
+    const { logout } = useAuth();
+
+    const [authError, setAuthError] = useState('');
     const [isLoggingOff, setIsLoggingOff] = useState(false);
 
     async function handleLogoff() {
         setIsLoggingOff(true);
-        setError('');
+        setAuthError('');
 
         try {
-            const response = await fetch('/api/users/logoff', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-Token': token,
-                },
-                credentials: 'include',
-            });
+            const result = await logout();
 
-            if (response.ok) {
-                onSetToken('');
-                onSetEmail('');
-            } else {
-                throw new Error('Failed to log off');
+            if (result && !result.success) {
+                setAuthError('Logoff failed.');
             }
         } catch (error) {
-            setError(`Error: ${error.message}`);
+            setAuthError(`Error: ${error.message}`);
         } finally {
             setIsLoggingOff(false);
         }
@@ -32,12 +26,18 @@ function Logoff({ token, onSetEmail, onSetToken }) {
 
     return (
         <>
-        {error && <div>{error}</div>}
-        <button type="button" onClick={handleLogoff} disabled={isLoggingOff}>
-            {isLoggingOff ? 'Logging off...' : 'Logoff'}
-        </button>
+        
+            {authError && <div>{authError}</div>}
+
+            <button
+                type="button"
+                onClick={handleLogoff}
+                disabled={isLoggingOff}
+            >
+                {isLoggingOff ? 'Logging Off...' : 'Log Off'}
+            </button>
         </>
-    )
+    );
 }
 
-export default Logoff;
+export default Logout;
