@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useReducer } from 'react';
+import { useEffect, useCallback, useReducer } from 'react';
 import TodoList from '../features/Todos/TodoList/TodoList.jsx';
 import TodoForm from '../features/Todos/TodoForm.jsx';
 import SortBy from '../shared/SortBy.jsx';
@@ -127,7 +127,7 @@ function TodosPage() {
       } else {
         throw new Error('Failed to add todo.');
       }
-    } catch (error) {
+    } catch {
       dispatch({ type: TODO_ACTIONS.ADD_TODO_ERROR, payload: newTodo.id });
     }
   }
@@ -164,7 +164,7 @@ function TodosPage() {
       } else {
         throw new Error('Failed to complete todo.');
       }
-    } catch (error) {
+    } catch {
       dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, og: originalTodo }});
     }
   }
@@ -200,7 +200,7 @@ function TodosPage() {
       } else {
         throw new Error('Failed to update todo.');
       }
-    } catch (error) {
+    } catch {
       dispatch({ type: TODO_ACTIONS.UPDATE_TODO_ERROR, payload: { id: editedTodo.id, originalTodo }});
     }
   }
