@@ -3,6 +3,12 @@ A simple, responsive task managemnet application designed to help users organize
 
 ## Screenshots
 
+![alt text](<Screenshots/Screenshot 2026-09-15 at 2.04.34 PM.png>)
+
+![alt text](<Screenshots/Screenshot 2026-09-15 at 2.05.34 PM.png>)
+
+![alt text](<Screenshots/Screenshot 2026-09-15 at 3.14.36 PM.png>)
+
 ## Features
 
 - **Todo Actions:** Create, edit, delete, and mark todos as completed.
@@ -66,7 +72,8 @@ Running the following runs ESLint to check for code formatting/quality issues:
 ## Future Improvements
 
 - Implement drag-and-drop todo reordering.
-- 
+- Add due dates.
+- Support category tags.
 
 ## Contact Information
 
