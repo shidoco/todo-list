@@ -1,18 +1,22 @@
 import { useState, useEffect, useCallback, useReducer } from 'react';
-import TodoList from './TodoList/TodoList.jsx';
-import TodoForm from './TodoForm.jsx';
-import SortBy from '../../shared/SortBy.jsx';
-import FilterInput from '../../shared/FilterInput.jsx';
-import useDebounce from '../../utils/useDebounce.js';
-import { todoReducer, initialTodoState, TODO_ACTIONS } from '../../reducers/todoReducer.js';
-import { useAuth } from '../../contexts/AuthContext.jsx'
+import TodoList from '../features/Todos/TodoList/TodoList.jsx';
+import TodoForm from '../features/Todos/TodoForm.jsx';
+import SortBy from '../shared/SortBy.jsx';
+import FilterInput from '../shared/FilterInput.jsx';
+import useDebounce from '../utils/useDebounce.js';
+import { todoReducer, initialTodoState, TODO_ACTIONS } from '../reducers/todoReducer.js';
+import { useAuth } from '../contexts/AuthContext.jsx'
+import { useSearchParams } from 'react-router';
+import StatusFilter from '../shared/StatusFilter.jsx';
 
 function TodosPage() {
   //Use Token.
   const { token } = useAuth();
-
+  const [searchParams] = useSearchParams();
   //Use Reducer State and Dispatch Updates.
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
+
+  const statusFilter = searchParams.get('status') || 'all';
   
   const {
     todoList,
@@ -153,12 +157,12 @@ function TodosPage() {
         invalidateCache();
         //Complete Server Todo Failiure. Restore Orginial Incomplete Todo to TodoList. 
       } else if (response.status === 401) {
-        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
+        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, og: originalTodo }});
       } else {
         throw new Error('Failed to complete todo.');
       }
     } catch (error) {
-      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, originalTodo }});
+      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_ERROR, payload: { id, og: originalTodo }});
     }
   }
 
@@ -187,7 +191,7 @@ function TodosPage() {
         //Update Client TodoList with Server Todo. Replace Client Todo.
         dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS, payload: { id: serverTodo.id, serverTodo }});
         invalidateCache();
-      //Failiure Updating Server Todo. Restore Client Todo Back to How it Was. 
+      //Failiure Updating Server Todo. Restore Client Todo Back to Original Todo. 
       } else if (response.status === 401) {
         dispatch({ type: TODO_ACTIONS.UPDATE_TODO_ERROR, payload: { id: editedTodo.id, originalTodo }});
       } else {
@@ -224,9 +228,10 @@ function TodosPage() {
       )}
 
       <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={(newSort) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy : newSort, sortDirection }})} onSortDirectionChange={(newDir) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy, sortDirection: newDir }})}/>
+      <StatusFilter />
       <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} />
       <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} dataVersion={dataVersion} />
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} dataVersion={dataVersion} statusFilter={statusFilter}/>
 
     </div>
   );

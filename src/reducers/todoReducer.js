@@ -62,6 +62,7 @@ export function todoReducer(state, action) {
                 ...state,
                 todoList: [...state.todoList, action.payload],
                 error: '',
+                isTodoListLoading: true,
             };
 
         case TODO_ACTIONS.ADD_TODO_SUCCESS:
@@ -79,6 +80,7 @@ export function todoReducer(state, action) {
                 ...state,
                 todoList: state.todoList.filter((todo) => todo.id !== action.payload),
                 error: 'Failed to add todo.',
+                isTodoListLoading: false,
             };
         case TODO_ACTIONS.COMPLETE_TODO_START:
             return {
@@ -98,7 +100,7 @@ export function todoReducer(state, action) {
         case TODO_ACTIONS.COMPLETE_TODO_ERROR:
             return {
                 ...state,
-                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload : todo),
+                todoList: state.todoList.map((todo) => todo.id === action.payload.id ? action.payload.og : todo),
                 error: 'Failed to complete todo.',
             };
         case TODO_ACTIONS.UPDATE_TODO_START:

@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
 
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
+  const [user, setUser] = useState('');
   
   const login = async (userEmail, password) => {
     try {
@@ -29,7 +30,8 @@ export function AuthProvider({ children }) {
     
         if (response.status === 200 && data.name && data.csrfToken) {
         // Success: Update state
-            setEmail(data.name);
+            setUser(data);
+            setEmail(data.email);
             setToken(data.csrfToken);
             return { success: true };
         } else {
@@ -39,7 +41,7 @@ export function AuthProvider({ children }) {
                 error: `Authentication failed: ${data?.message}`,
         };
         }
-    } catch (error) {
+    } catch {
         return {
             success: false,
             error: 'Network error during login',
@@ -50,10 +52,11 @@ export function AuthProvider({ children }) {
     const logout = async () => {
 
         if (!token) {
+            setUser('');
             setEmail('');
             setToken('');
             return { success: true, 
-                error: 'No active session token found.'};
+                message: 'No active session token found.'};
         }
 
         try {
@@ -65,11 +68,12 @@ export function AuthProvider({ children }) {
             credentials: 'include',
             };
     
-            const response = await fetch('/api/users/logout', options);
+            const response = await fetch('/api/users/logoff', options);
             const data = await response.json();
     
             if (response.status === 200 || response.ok) {
             // Success: Update state
+            setUser('');
             setEmail('');
             setToken('');
             return { 
@@ -83,18 +87,20 @@ export function AuthProvider({ children }) {
                 error: `Authentication failed: ${data?.message}`,
             };
             }
-        } catch (error) {
+        } catch {
             return {
             success: false,
             error: 'Network error during logoff',
             };
         } finally {
+            setUser('');
             setEmail('');
             setToken('');
         }
     };
   
   const value = {
+    user,
     email,
     token,
     isAuthenticated: !!token,

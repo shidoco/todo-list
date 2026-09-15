@@ -1,24 +1,27 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useNavigate } from 'react-router';
 
-function Logout() {
+function Logoff() {
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
-    const [authError, setAuthError] = useState('');
+    const [error, setError] = useState('');
     const [isLoggingOff, setIsLoggingOff] = useState(false);
 
     async function handleLogoff() {
         setIsLoggingOff(true);
-        setAuthError('');
+        setError('');
 
         try {
             const result = await logout();
-
-            if (result && !result.success) {
-                setAuthError('Logoff failed.');
+            if (result.success) {
+                navigate('/login');
+            } else {
+                throw new Error(`Failed to Logout: ${result.error}`)
             }
         } catch (error) {
-            setAuthError(`Error: ${error.message}`);
+            setError(`Error: ${error.message}`);
         } finally {
             setIsLoggingOff(false);
         }
@@ -27,7 +30,7 @@ function Logout() {
     return (
         <>
         
-            {authError && <div>{authError}</div>}
+            {error && <div>{error}</div>}
 
             <button
                 type="button"
@@ -40,4 +43,4 @@ function Logout() {
     );
 }
 
-export default Logout;
+export default Logoff;
