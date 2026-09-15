@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TextInputWithLabel from '../../../shared/TextInputWithLabel';
 import { isValidTodoTitle } from '../../../utils/todoValidation';
 
-function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
@@ -32,8 +32,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   };
 
   return (
-    <li>
-      <form onSubmit={handleUpdate}>
+    <li className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <form className="flex flex-col gap-3 sm:flex-row sm:items-center" onSubmit={handleUpdate}>
         {isEditing ? (
           <>
             <TextInputWithLabel
@@ -42,13 +42,13 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               value={workingTitle}
               onChange={handleEdit}
             />
-            <button
+            <button className="rounded-md border border-red-200 px-3 py-2 font-bold text-red-600 hover:bg-red-50"
               type="button"
               onClick={handleCancel}
             >
               Cancel
             </button>
-            <button
+            <button className="rounded-md border border-green-400 px-3 py-2 font-bold text-green-600 hover:bg-green-50"
               onClick={handleUpdate}
               type="submit"
               disabled={!isValidTodoTitle(workingTitle)}
@@ -59,14 +59,21 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
         ) : (
           <>
             <label>
-                <input
+                <input className="accent-pink-500 h-5 w-5 "
                   type="checkbox"
                   id={`checkbox${todo.id}`}
                   checked={todo.isCompleted}
                   onChange={() => onCompleteTodo(todo.id)}
                 />
             </label>
-            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+            <span className="todo-title min-w-0 flex-1 cursor-pointer text-slate-800" onClick={() => setIsEditing(true)}>{todo.title}</span>
+            <button
+              className="rounded-md border border-red-200 px-3 py-2 font-bold text-red-600 hover:bg-red-50"
+              type="button"
+              onClick={() => onDeleteTodo(todo.id)}
+            >
+              Delete
+            </button>
           </>
         )}
       </form>
