@@ -32,7 +32,7 @@ function Logoff() {
         
             {error && <div>{error}</div>}
 
-            <button
+            <button className="rounded-md bg-slate-800 px-4 py-2 font-bold text-white transition hover:bg-slate-700"
                 type="button"
                 onClick={handleLogoff}
                 disabled={isLoggingOff}

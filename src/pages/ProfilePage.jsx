@@ -44,7 +44,7 @@ function ProfilePage() {
 
                 const active = total - completedNum;
 
-                const percentage = total === 0 ? 'N/A' : ((completedNum / total) * 100);
+                const percentage = total === 0 ? '0' :((completedNum / total) * 100).toFixed(0);
 
                 setStats({ total, completedNum, active, percentage });
             
@@ -60,47 +60,62 @@ function ProfilePage() {
     }, [token])
 
     return (
-        <div className="profile">
-            <h1>User Profile</h1>
+        <main className="mx-auto w-full max-w-4xl px-4 py-8">
+            <section className="space-y-8 rounded-xl bg-white p-6 shadow-lg sm:p-8">
+                <header>
+                    <h1 className="text-3xl font-bold text-slate-800">User Profile</h1>
+                    <p className="mt-2 text-slate-500">Manage your account and view your todo progress.</p>
+                </header>
 
-            <section className="profile-info">
-                <h2>Account Details</h2>
+                <section className="border-t border-slate-200 pt-6">
+                    <h2 className="text-xl font-bold text-slate-800">Account Details</h2>
 
-                {loading && <p>Loading profile...</p>}
-                {error && <p>{error}</p>}
+                    {loading && <p className="mt-4 text-slate-500">Loading profile...</p>}
+                    {error && <p className="mt-4 rounded-md bg-red-100 px-4 py-3 text-red-700">{error}</p>}
 
-                {!loading && !error && (
-                <div>
-                    <p>
-                    Name: {user.name || 'N/A'}
-                    </p>
-                    <p>
-                    Email: {user.email || 'N/A'}
-                    </p>
-                </div>
-                )}
+                    {!loading && !error && (
+                        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                            <div className="rounded-lg bg-slate-50 p-4">
+                                <p className="text-sm font-semibold text-slate-500">Name</p>
+                                <p className="mt-1 text-lg text-slate-800">{user.name || 'N/A'}</p>
+                            </div>
+                            <div className="rounded-lg bg-slate-50 p-4">
+                                <p className="text-sm font-semibold text-slate-500">Email</p>
+                                <p className="mt-1 break-words text-lg text-slate-800">{user.email || 'N/A'}</p>
+                            </div>
+                        </div>
+                    )}
+                </section>
+
+                <section className="border-t border-slate-200 pt-6">
+                    <h2 className="text-xl font-bold text-slate-800">Todo Statistics</h2>
+
+                    {loading && <p className="mt-4 text-slate-500">Loading statistics...</p>}
+                    {error && <p className="mt-4 rounded-md bg-red-100 px-4 py-3 text-red-700">{error}</p>}
+
+                    {!loading && !error && (
+                        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            <div className="rounded-lg border border-slate-200 p-4">
+                                <h3 className="text-sm font-semibold text-slate-500">Total Todos</h3>
+                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.total}</p>
+                            </div>
+                            <div className="rounded-lg border border-slate-200 p-4">
+                                <h3 className="text-sm font-semibold text-slate-500">Completed</h3>
+                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.completedNum}</p>
+                            </div>
+                            <div className="rounded-lg border border-slate-200 p-4">
+                                <h3 className="text-sm font-semibold text-slate-500">Active</h3>
+                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.active}</p>
+                            </div>
+                            <div className="rounded-lg border border-slate-200 p-4">
+                                <h3 className="text-sm font-semibold text-slate-500">Percentage Complete</h3>
+                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.percentage}%</p>
+                            </div>
+                        </div>
+                    )}
+                </section>
             </section>
-
-            <section className="profile-stats">
-                <h2>Todo Statistics</h2>
-
-                {loading && <p>Loading statistics...</p>}
-                {error && <p>{error}</p>}
-
-                {!loading && !error && (
-                    <div className="stats">
-                        <h3>Total Todos</h3>
-                        <p>{stats.total}</p>
-                        <h3>Completed</h3>
-                        <p>{stats.completedNum}</p>
-                        <h3>Active</h3>
-                        <p>{stats.active}</p>
-                        <h3>Percentage Complete</h3>
-                        <p>{stats.percentage}</p>
-                    </div>
-                )}
-            </section>
-        </div>
+        </main>
     );
 }
 export default ProfilePage;

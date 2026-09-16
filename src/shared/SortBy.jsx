@@ -1,4 +1,3 @@
-import React from 'react';
 
 function SortBy ({sortBy, sortDirection, onSortByChange, onSortDirectionChange}) {
     return (

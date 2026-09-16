@@ -6,11 +6,11 @@ function Header() {
   const { isAuthenticated } = useAuth();
   return (
     <header>
-    <h1>Todo List</h1>
-    <Navigation />
-    <div>
-      {isAuthenticated && <Logoff />}
-    </div>
+      <h1 className="text-center py-5 font-bold text-4xl">Todo List</h1>
+      <Navigation />
+      <div className="flex justify-center px-4 pb-4 mt-5">
+        {isAuthenticated && <Logoff/>}
+      </div>
   </header>
   );
 }

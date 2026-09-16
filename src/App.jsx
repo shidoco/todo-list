@@ -1,4 +1,4 @@
-import './App.css'
+import './index.css'
 import { Routes, Route } from 'react-router';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -11,8 +11,8 @@ import Header from './shared/Header';
 
 function App() {
   return (
-    <>
-      <Header />
+    <div className="min-h-screen bg-[#ffd6e8] font-[Rubik]">
+      <Header/>
       <Routes>
         <Route path='/' element={<HomePage />}/>
         <Route path='/about' element={<AboutPage />}/>
@@ -21,7 +21,7 @@ function App() {
         <Route path='/profile' element={<RequireAuth><ProfilePage /></RequireAuth>}/>
         <Route path='*' element={<NotFoundPage />}/>
       </Routes>
-    </>
+    </div>
   );
 }
 

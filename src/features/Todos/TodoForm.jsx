@@ -18,7 +18,7 @@ function TodoForm({ onAddTodo }) {
     };
 
     return (
-        <form onSubmit={handleAddTodo}>
+        <form onSubmit={handleAddTodo} className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <TextInputWithLabel
             elementId="todoTitle"
             labelText="Todo"
@@ -27,7 +27,8 @@ function TodoForm({ onAddTodo }) {
             onChange={(event) => setWorkingTodoTitle(event.target.value)}
             />
         <button type="submit"
-        disabled={!isValidTodoTitle(workingTodoTitle)}>Add Todo
+        disabled={!isValidTodoTitle(workingTodoTitle)}
+        className="rounded-md bg-slate-800 px-4 py-2 font-bold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60">Add Todo
         </button>
         </form>
     );
