@@ -3,11 +3,20 @@ A simple, responsive task managemnet application designed to help users organize
 
 ## Screenshots
 
+Desktop
+
 ![alt text](<Screenshots/Screenshot 2026-09-15 at 2.04.34 PM.png>)
 
 ![alt text](<Screenshots/Screenshot 2026-09-15 at 2.05.34 PM.png>)
 
 ![alt text](<Screenshots/Screenshot 2026-09-15 at 3.14.36 PM.png>)
+
+
+Mobile
+
+![alt text](<Screenshots/Screenshot 2026-09-17 at 4.45.20 PM.png>)
+
+![alt text](<Screenshots/Screenshot 2026-09-17 at 4.46.19 PM.png>)
 
 ## Features
 
