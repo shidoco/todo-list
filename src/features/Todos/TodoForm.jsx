@@ -21,14 +21,16 @@ function TodoForm({ onAddTodo }) {
         <form onSubmit={handleAddTodo} className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <TextInputWithLabel
             elementId="todoTitle"
-            labelText="Todo"
+            labelText="Add a task"
             ref={inputRef}
             value={workingTodoTitle}
             onChange={(event) => setWorkingTodoTitle(event.target.value)}
             />
-        <button type="submit"
-        disabled={!isValidTodoTitle(workingTodoTitle)}
-        className="rounded-md bg-slate-800 px-4 py-2 font-bold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60">Add Todo
+        <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)} className="primary-button sm:mb-0">
+            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            Add task
         </button>
         </form>
     );

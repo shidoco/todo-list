@@ -231,42 +231,49 @@ function TodosPage() {
   }
   
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 py-8">
-      <section className="space-y-6 rounded-xl bg-white p-6 shadow-lg sm:p-8">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-800">My Todos</h2>
-          <p className="mt-1 text-slate-500">Add, organize, and complete your tasks.</p>
+    <main className="page-container">
+      <section className="surface-card space-y-7 p-5 sm:p-9">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 className="page-title">My Todos</h1>
+          </div>
+          <div className="rounded-xl bg-[#f9edf2] px-4 py-3 text-center">
+            <p className="text-2xl font-extrabold leading-none text-[#bd527c]">{todoList.length}</p>
+            <p className="mt-1 text-xs font-extrabold uppercase tracking-wide text-[#82757c]">Tasks</p>
+          </div>
         </div>
 
       {error && (
-        <div className="rounded-md bg-red-100 px-4 py-3 text-red-700">
+        <div className="status-message">
           <div>{error}</div>
-          <button className="mt-3 rounded-md bg-slate-800 px-3 py-2 text-sm font-bold text-white hover:bg-slate-700" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>Clear Error</button>
+          <button className="secondary-button mt-3 text-sm" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>Clear Error</button>
         </div>
       )}
 
       {filterError && (
-        <div className="rounded-md bg-red-100 px-4 py-3 text-red-700">
+        <div className="status-message">
           <p>{filterError}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button className="rounded-md bg-slate-800 px-3 py-2 text-sm font-bold text-white hover:bg-slate-700" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}>Clear Filter Error</button>
-            <button className="rounded-md border border-slate-300 px-3 py-2 text-sm font-bold text-slate-700 hover:bg-slate-50" onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}>Reset Filters</button>
+            <button className="primary-button text-sm" onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}>Clear Filter Error</button>
+            <button className="secondary-button text-sm" onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}>Reset Filters</button>
           </div>
         </div>
       )}
       
       {debouncedLoading && (
-        <div className="rounded-md bg-slate-100 px-4 py-3 text-slate-600">
+        <div className="rounded-xl bg-[#f9edf2] px-4 py-3 text-sm font-bold text-[#765b68]" role="status">
           Loading todos...
         </div>
       )}
 
-        <div className="grid gap-4 rounded-lg bg-slate-50 p-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4 sm:grid-cols-2 lg:grid-cols-4">
           <SortBy sortBy={sortBy} sortDirection={sortDirection} onSortByChange={(newSort) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy : newSort, sortDirection }})} onSortDirectionChange={(newDir) => dispatch({ type: TODO_ACTIONS.SET_SORT, payload: { sortBy, sortDirection: newDir }})}/>
           <StatusFilter />
           <FilterInput filterTerm={filterTerm} onFilterChange={handleFilterChange} />
         </div>
-        <TodoForm onAddTodo={addTodo} />
+        <div className="border-t border-[#f0e7eb] pt-6">
+          <TodoForm onAddTodo={addTodo} />
+        </div>
         <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo} onDeleteTodo={deleteTodo} dataVersion={dataVersion} statusFilter={statusFilter}/>
 
       </section>

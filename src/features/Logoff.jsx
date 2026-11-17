@@ -30,9 +30,9 @@ function Logoff() {
     return (
         <>
         
-            {error && <div>{error}</div>}
+            {error && <div className="status-message text-sm" role="alert">{error}</div>}
 
-            <button className="rounded-md bg-slate-800 px-4 py-2 font-bold text-white transition hover:bg-slate-700"
+            <button className="secondary-button"
                 type="button"
                 onClick={handleLogoff}
                 disabled={isLoggingOff}

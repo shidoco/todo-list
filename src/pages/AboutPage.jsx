@@ -1,24 +1,23 @@
 function AboutPage() {
     return (
-        <main className="mx-auto w-full max-w-4xl px-4 py-8">
-            <section className="space-y-8 rounded-xl bg-white p-6 shadow-lg sm:p-8">
+        <main className="page-container">
+            <section className="surface-card space-y-8 p-5 sm:p-9">
                 <header>
-                    <h1 className="text-3xl font-bold text-slate-800">About TodoList</h1>
-                    <p className="mt-2 text-lg text-slate-500">A task management application designed to boost productivity.</p>
+                    <h1 className="page-title">About TodoList</h1>
                 </header>
 
-                <section className="border-t border-slate-200 pt-6">
-                    <h2 className="text-xl font-bold text-slate-800">App Features</h2>
-                    <ul className="mt-4 list-disc space-y-3 pl-5 text-slate-600 marker:text-slate-400">
-                        <li>Task Management: Easily create, view, complete, and delete tasks.</li>
-                        <li>User Authentication: Use protected routes to make sure your list stays private.</li>
-                        <li>State: Keeps track of login status and user sessions.</li>
+                <section className="border-t border-[#f0e7eb] pt-6">
+                    <h2 className="font-[Rubik] text-xl font-semibold text-[#44363d]">Features</h2>
+                    <ul className="mt-4 grid gap-3 text-[#665861] sm:grid-cols-3">
+                        <li className="rounded-2xl bg-[#fcf8fa] p-4 leading-6">Task management: Create, view, complete, and delete tasks.</li>
+                        <li className="rounded-2xl bg-[#fcf8fa] p-4 leading-6">Authentication: Keep your todo list private.</li>
+                        <li className="rounded-2xl bg-[#fcf8fa] p-4 leading-6">Session state: Stay signed in to your account.</li>
                     </ul>
                 </section>
 
-                <section className="border-t border-slate-200 pt-6">
-                    <h2 className="text-xl font-bold text-slate-800">Technology Used</h2>
-                    <ul className="mt-4 list-disc space-y-3 pl-5 text-slate-600 marker:text-slate-400">
+                <section className="border-t border-[#f0e7eb] pt-6">
+                    <h2 className="font-[Rubik] text-xl font-semibold text-[#44363d]">Technology</h2>
+                    <ul className="mt-4 list-disc space-y-3 pl-5 text-[#665861] marker:text-[#c27b98]">
                         <li>React: UI library for building state-driven component interfaces.</li>
                         <li>React Router: Handles client-side routing, protected views, and navigation.</li>
                         <li>Vite: Build tool and development server that runs React projects with extreme speed.</li>
