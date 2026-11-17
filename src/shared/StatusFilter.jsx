@@ -15,11 +15,12 @@ function StatusFilter() {
 
     return (
         <div>
-            <label htmlFor='statusFilter'>Show:</label>
+            <label className="field-label" htmlFor='statusFilter'>Show</label>
             <select
             id='statusFilter'
             value={currentStatus}
             onChange={(e) => handleStatusChange(e.target.value)}
+            className="field-control"
             >
                 <option value='all'>All Todos</option>
                 <option value='active'>Active Todos</option>

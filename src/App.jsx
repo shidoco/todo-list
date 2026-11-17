@@ -11,7 +11,7 @@ import Header from './shared/Header';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#ffd6e8] font-[Rubik]">
+    <div className="app-shell">
       <Header/>
       <Routes>
         <Route path='/' element={<HomePage />}/>

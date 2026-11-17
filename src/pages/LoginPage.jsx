@@ -42,21 +42,23 @@ function LoginPage() {
     }
 
     return (
-        <main className="flex items-center justify-center px-4 py-8">
+        <main className="page-container flex justify-center">
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-md space-y-5 rounded-xl bg-white p-8 shadow-lg"
+                className="surface-card w-full max-w-md space-y-6 p-6 sm:p-9"
             >
-                <h2 className="text-center text-2xl font-bold text-slate-800">Log in</h2>
+                <header className="text-center">
+                    <h1 className="page-title text-3xl">Log in</h1>
+                </header>
 
                 {authError && (
-                    <div className="rounded-md bg-red-100 px-4 py-3 text-sm text-red-700">
+                    <div className="status-message text-sm" role="alert">
                         {authError}
                     </div>
                 )}
 
                 <div className="space-y-2">
-                    <label htmlFor="email" className="block font-semibold text-slate-700">
+                    <label htmlFor="email" className="field-label">
                         Email
                     </label>
                     <input
@@ -65,12 +67,12 @@ function LoginPage() {
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                         required
-                        className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                        className="field-control"
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <label htmlFor="password" className="block font-semibold text-slate-700">
+                    <label htmlFor="password" className="field-label">
                         Password
                     </label>
                     <input
@@ -79,14 +81,14 @@ function LoginPage() {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         required
-                        className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                        className="field-control"
                     />
                 </div>
 
                 <button
                     type="submit"
                     disabled={isLoggingOn}
-                    className="w-full rounded-md bg-slate-800 px-4 py-2 font-bold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="primary-button w-full"
                 >
                     {isLoggingOn ? 'Logging in...' : 'Log On'}
                 </button>

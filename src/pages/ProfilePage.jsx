@@ -60,56 +60,54 @@ function ProfilePage() {
     }, [token])
 
     return (
-        <main className="mx-auto w-full max-w-4xl px-4 py-8">
-            <section className="space-y-8 rounded-xl bg-white p-6 shadow-lg sm:p-8">
+        <main className="page-container">
+            <section className="surface-card space-y-8 p-5 sm:p-9">
                 <header>
-                    <h1 className="text-3xl font-bold text-slate-800">User Profile</h1>
-                    <p className="mt-2 text-slate-500">Manage your account and view your todo progress.</p>
+                    <h1 className="page-title">User Profile</h1>
                 </header>
 
-                <section className="border-t border-slate-200 pt-6">
-                    <h2 className="text-xl font-bold text-slate-800">Account Details</h2>
+                <section className="border-t border-[#f0e7eb] pt-6">
+                    <h2 className="font-[Rubik] text-xl font-semibold text-[#44363d]">Account details</h2>
 
-                    {loading && <p className="mt-4 text-slate-500">Loading profile...</p>}
-                    {error && <p className="mt-4 rounded-md bg-red-100 px-4 py-3 text-red-700">{error}</p>}
+                    {loading && <p className="mt-4 text-[#82757c]">Loading profile...</p>}
+                    {error && <p className="status-message mt-4">{error}</p>}
 
                     {!loading && !error && (
                         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                            <div className="rounded-lg bg-slate-50 p-4">
-                                <p className="text-sm font-semibold text-slate-500">Name</p>
-                                <p className="mt-1 text-lg text-slate-800">{user.name || 'N/A'}</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <p className="text-sm font-extrabold text-[#82757c]">Name</p>
+                                <p className="mt-1 text-lg font-bold text-[#44363d]">{user.name || 'N/A'}</p>
                             </div>
-                            <div className="rounded-lg bg-slate-50 p-4">
-                                <p className="text-sm font-semibold text-slate-500">Email</p>
-                                <p className="mt-1 break-words text-lg text-slate-800">{user.email || 'N/A'}</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <p className="text-sm font-extrabold text-[#82757c]">Email</p>
+                                <p className="mt-1 break-words text-lg font-bold text-[#44363d]">{user.email || 'N/A'}</p>
                             </div>
                         </div>
                     )}
                 </section>
 
-                <section className="border-t border-slate-200 pt-6">
-                    <h2 className="text-xl font-bold text-slate-800">Todo Statistics</h2>
+                <section className="border-t border-[#f0e7eb] pt-6">
+                    <h2 className="font-[Rubik] text-xl font-semibold text-[#44363d]">Todo statistics</h2>
 
-                    {loading && <p className="mt-4 text-slate-500">Loading statistics...</p>}
-                    {error && <p className="mt-4 rounded-md bg-red-100 px-4 py-3 text-red-700">{error}</p>}
+                    {loading && <p className="mt-4 text-[#82757c]">Loading statistics...</p>}
 
                     {!loading && !error && (
                         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            <div className="rounded-lg border border-slate-200 p-4">
-                                <h3 className="text-sm font-semibold text-slate-500">Total Todos</h3>
-                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.total}</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <h3 className="text-sm font-extrabold text-[#82757c]">Total todos</h3>
+                                <p className="mt-2 font-[Rubik] text-3xl font-semibold text-[#bd527c]">{stats.total}</p>
                             </div>
-                            <div className="rounded-lg border border-slate-200 p-4">
-                                <h3 className="text-sm font-semibold text-slate-500">Completed</h3>
-                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.completedNum}</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <h3 className="text-sm font-extrabold text-[#82757c]">Completed</h3>
+                                <p className="mt-2 font-[Rubik] text-3xl font-semibold text-[#bd527c]">{stats.completedNum}</p>
                             </div>
-                            <div className="rounded-lg border border-slate-200 p-4">
-                                <h3 className="text-sm font-semibold text-slate-500">Active</h3>
-                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.active}</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <h3 className="text-sm font-extrabold text-[#82757c]">Active</h3>
+                                <p className="mt-2 font-[Rubik] text-3xl font-semibold text-[#bd527c]">{stats.active}</p>
                             </div>
-                            <div className="rounded-lg border border-slate-200 p-4">
-                                <h3 className="text-sm font-semibold text-slate-500">Percentage Complete</h3>
-                                <p className="mt-2 text-3xl font-bold text-slate-800">{stats.percentage}%</p>
+                            <div className="rounded-2xl border border-[#efe5e9] bg-[#fcf8fa] p-4">
+                                <h3 className="text-sm font-extrabold text-[#82757c]">Percentage complete</h3>
+                                <p className="mt-2 font-[Rubik] text-3xl font-semibold text-[#bd527c]">{stats.percentage}%</p>
                             </div>
                         </div>
                     )}
