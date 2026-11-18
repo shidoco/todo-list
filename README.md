@@ -5,18 +5,18 @@ A simple, responsive task managemnet application designed to help users organize
 
 Desktop
 
-![alt text](<Screenshots/Screenshot 2026-09-15 at 2.04.34 PM.png>)
+![alt text](<Screenshots/Screenshot 2026-11-17 at 8.23.30 PM.png>)
 
-![alt text](<Screenshots/Screenshot 2026-09-15 at 2.05.34 PM.png>)
+![alt text](<Screenshots/Screenshot 2026-11-17 at 8.23.52 PM.png>)
 
-![alt text](<Screenshots/Screenshot 2026-09-15 at 3.14.36 PM.png>)
+![alt text](<Screenshots/Screenshot 2026-11-17 at 8.24.08 PM.png>)
 
 
 Mobile
 
-![alt text](<Screenshots/Screenshot 2026-09-17 at 4.45.20 PM.png>)
+![alt text](<Screenshots/Screenshot 2026-11-17 at 8.25.58 PM.png>)
 
-![alt text](<Screenshots/Screenshot 2026-09-17 at 4.46.19 PM.png>)
+![alt text](<Screenshots/Screenshot 2026-11-17 at 8.25.13 PM.png>)
 
 ## Features
 
